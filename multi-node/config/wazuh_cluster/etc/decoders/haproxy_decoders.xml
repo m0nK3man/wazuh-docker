@@ -1,0 +1,27 @@
+<decoder name="haproxy">
+    <program_name>^haproxy</program_name>
+</decoder>
+
+<decoder name="haproxy">
+    <parent>haproxy</parent>
+    <regex>(\S+):(\S+) [(\S+)] (\S+) (\S+)/(\S+) (\d+/\d+/\d+/\d+/\d+) (\S+) (\S+)</regex>
+    <order>client_ip, client_port, accept_date, frontend_name, backend_name, server_name, timer, status_code, response_lenght</order>
+</decoder>
+
+<decoder name="haproxy">
+    <parent>haproxy</parent>
+    <regex offset="after_regex">- - (\S+) (\d+/\d+/\d+/\d+/\d+) (\d+/\d+)</regex>
+    <order>state, connections, queue</order>
+</decoder>
+
+<decoder name="haproxy">
+    <parent>haproxy</parent>
+    <regex offset="after_regex">{(\.*)}</regex>
+    <order>headers</order>
+</decoder>
+
+<decoder name="haproxy">
+    <parent>haproxy</parent>
+    <regex offset="after_regex">"(\.*)"</regex>
+    <order>http_request</order>
+</decoder>

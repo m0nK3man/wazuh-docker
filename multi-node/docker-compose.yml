@@ -39,10 +39,23 @@ services:
       - master-wazuh-wodles:/var/ossec/wodles
       - master-filebeat-etc:/etc/filebeat
       - master-filebeat-var:/var/lib/filebeat
+      ## Mount certs
       - ./config/wazuh_indexer_ssl_certs/root-ca-manager.pem:/etc/ssl/root-ca.pem
       - ./config/wazuh_indexer_ssl_certs/wazuh.master.pem:/etc/ssl/filebeat.pem
       - ./config/wazuh_indexer_ssl_certs/wazuh.master-key.pem:/etc/ssl/filebeat.key
+      ## Mount ossec.conf
       - ./config/wazuh_cluster/wazuh_manager.conf:/wazuh-config-mount/etc/ossec.conf
+      ## Mount custom config
+      # Custom integrations
+      - ./config/wazuh_cluster/integrations/custom-telegram:/var/ossec/integrations/custom-telegram
+      - ./config/wazuh_cluster/integrations/custom-telegram.py:/var/ossec/integrations/custom-telegram.py
+      # /var/ossec/etc/ files
+      - ./config/wazuh_cluster/etc/rules:/var/ossec/etc/rules
+      - ./config/wazuh_cluster/etc/decoders:/var/ossec/etc/decoders
+      # Filebeat config
+      - ./config/wazuh_cluster/filebeat/pipeline.json:/usr/share/filebeat/module/wazuh/archives/ingest/pipeline.json
+      - ./config/wazuh_cluster/filebeat/pipeline.json:/usr/share/filebeat/module/wazuh/alerts/ingest/pipeline.json
+      - ./config/wazuh_cluster/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml
 
   wazuh.worker:
     image: wazuh/wazuh-manager:4.9.0
@@ -75,10 +88,23 @@ services:
       - worker-wazuh-wodles:/var/ossec/wodles
       - worker-filebeat-etc:/etc/filebeat
       - worker-filebeat-var:/var/lib/filebeat
+      ## Mount certs
       - ./config/wazuh_indexer_ssl_certs/root-ca-manager.pem:/etc/ssl/root-ca.pem
-      - ./config/wazuh_indexer_ssl_certs/wazuh.worker.pem:/etc/ssl/filebeat.pem
-      - ./config/wazuh_indexer_ssl_certs/wazuh.worker-key.pem:/etc/ssl/filebeat.key
-      - ./config/wazuh_cluster/wazuh_worker.conf:/wazuh-config-mount/etc/ossec.conf
+      - ./config/wazuh_indexer_ssl_certs/wazuh.master.pem:/etc/ssl/filebeat.pem
+      - ./config/wazuh_indexer_ssl_certs/wazuh.master-key.pem:/etc/ssl/filebeat.key
+      ## Mount ossec.conf
+      - ./config/wazuh_cluster/wazuh_manager.conf:/wazuh-config-mount/etc/ossec.conf
+      ## Mount custom config
+      # Custom integrations
+      - ./config/wazuh_cluster/integrations/custom-telegram:/var/ossec/integrations/custom-telegram
+      - ./config/wazuh_cluster/integrations/custom-telegram.py:/var/ossec/integrations/custom-telegram.py
+      # /var/ossec/etc/ files
+      - ./config/wazuh_cluster/etc/rules:/var/ossec/etc/rules
+      - ./config/wazuh_cluster/etc/decoders:/var/ossec/etc/decoders
+      # Filebeat config
+      - ./config/wazuh_cluster/filebeat/pipeline.json:/usr/share/filebeat/module/wazuh/archives/ingest/pipeline.json
+      - ./config/wazuh_cluster/filebeat/pipeline.json:/usr/share/filebeat/module/wazuh/alerts/ingest/pipeline.json
+      - ./config/wazuh_cluster/filebeat/filebeat.yml:/etc/filebeat/filebeat.yml
 
   wazuh1.indexer:
     image: wazuh/wazuh-indexer:4.9.0

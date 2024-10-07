@@ -1,0 +1,8 @@
+<group name="bash">
+
+<rule id="110010" level="3">
+  <program_name>^Bash_History</program_name>
+  <description>$(pwd): $(command)</description>
+</rule>
+
+</group>

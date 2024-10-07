@@ -1,0 +1,27 @@
+<decoder name="Bash_History">
+  <program_name>^Bash_History</program_name>
+</decoder>
+
+<decoder name="Bash_History">
+  <parent>Bash_History</parent>
+  <regex>^\s*(\S+)\s*:</regex>
+  <order>logname</order>
+</decoder>
+
+<decoder name="Bash_History">
+  <parent>Bash_History</parent>
+  <regex>:\s(\S+)\s:</regex>
+  <order>whoami</order>
+</decoder>
+
+<decoder name="Bash_History">
+  <parent>Bash_History</parent>
+  <regex>:\s+(/\.+)\s+-</regex>
+  <order>pwd</order>
+</decoder>
+
+ <decoder name="Bash_History">
+  <parent>Bash_History</parent>
+  <regex>-\s*(\.+)$</regex>
+  <order>command</order>
+</decoder>

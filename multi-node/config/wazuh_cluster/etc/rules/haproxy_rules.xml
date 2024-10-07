@@ -1,0 +1,8 @@
+<group name="haproxy">
+
+  <rule id="110001" level="3">
+    <decoded_as>haproxy</decoded_as>
+    <description>$(http_request)</description>
+  </rule>
+
+</group>
